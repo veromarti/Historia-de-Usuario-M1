@@ -1,5 +1,6 @@
 import csv
 
+#preguntar todo lo del csv
 
 
 def load_file():
