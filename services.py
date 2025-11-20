@@ -19,9 +19,7 @@ def add_product(inventory):
     inventory.append(product)
     return
 
-def show_inventory():
-    inventory = files.load_file()
-    #print(inventory)
+def show_inventory(inventory):
     print('\n')
     print(f'{"    Product    ":^18} {" Price ":^8} {"Quantity":^8}')
     print(f'{"---------------":<18} {"-------":^8} {"--------":^8}')
@@ -38,16 +36,22 @@ def find_product(product, inventory):
     product = product.lower()
     for item in inventory:
         if product in item['name'].lower():
-            return item
+            element = inventory.index(item)
+            return item, element
     return None
 
 def update_product(product, inventory, new_price = None, new_quant = None):
     item = find_product(product, inventory)
+    if new_price is not None:
+        item['price'] = new_price
+    if new_quant is not None:
+        item['quantity'] = new_quant
+    return inventory    
 
-    pass
-
-def remove_product():
-    pass
+def remove_product(product, inventory):
+    item, position = find_product(product, inventory)
+    inventory.pop(position)
+    return inventory    
 
 def exit():
     pass
