@@ -1,11 +1,12 @@
 import services
 import validation
 import files
+import stats
 
 flag_menu = False
 add = "y"
 
-def principal_menu():
+def main():
     print("\n- - - - - - WELCOME TO THE INVENTORY SYSTEM - - - - - -\n")
 
     text_menu= (
@@ -26,7 +27,8 @@ def principal_menu():
     return flag_menu, option
 
 while not flag_menu:
-    flag_menu, option = principal_menu()
+    inven=files.load_file()
+    flag_menu, option = main()
 
     if option == 1:
         while add == "y":
@@ -35,22 +37,23 @@ while not flag_menu:
     elif option == 2:
         services.show_inventory()
         services.clear()
-        flag_menu = False
 
     elif option == 3:
-        services.find_product()
-        pass
+        product = validation.str_entry()
+        services.find_product(product, inven)
 
     elif option == 4:
-        services.update_product()
-        pass
+        product = validation.str_entry()
+        n_price = validation.float_entry("New Price: ", 0.001)
+        n_quant = validation.int_entry("New Quantity: ", 1)
+        services.update_product(product, inven, n_price, n_quant)
 
     elif option == 5:
         services.remove_product()
         pass
 
     elif option == 6:
-        services.stats()
+        stats.stats(inven)
         pass
 
     elif option == 8:
