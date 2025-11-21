@@ -22,7 +22,7 @@ def total_cost(price_list,quant_list):
     
     for item in range(len(price_list)):
         total_cost = price_list[item] * quant_list[item]
-        cost_list.append(total_cost)
+        cost_list.append(round(total_cost,2))
     return cost_list
 
 def expensive_product(price_list, inventory):
@@ -36,8 +36,8 @@ def largest_stock(quant_list, inventory):
     large_stock = max(quant_list)
     position = quant_list.index(large_stock)
     item_name = inventory[position]['name']
-    item_price = inventory[position]['price']
-    return (item_name,item_price)
+    item_quant = inventory[position]['quantity']
+    return (item_name,item_quant)
 
 def stats(inventory):
     p_list , q_list = invent_list(inventory)
@@ -45,10 +45,6 @@ def stats(inventory):
     t_cost = total_cost(p_list,q_list)
     exp_product = expensive_product(p_list, inventory)
     large_stock = largest_stock(q_list,inventory)
-    # print(p_list)
-    # print(q_list)
-    # print(t_units)
-    # print(t_cost)
     return t_units, t_cost, exp_product, large_stock
 
 

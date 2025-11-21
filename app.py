@@ -4,7 +4,7 @@ import files
 import stats
 
 flag_menu = False
-add = "y"
+
 flag_stats = False
 element = 0
 
@@ -12,7 +12,7 @@ def main():
     print("\n- - - - - - WELCOME TO THE INVENTORY SYSTEM - - - - - -\n")
 
     text_menu= (
-        "1. Add Product\n"
+        "1. Add Products\n"
         "2. Show Inventory\n"
         "3. Find Product\n"
         "4. Update Product\n"
@@ -25,16 +25,25 @@ def main():
     )
     option = validation.int_entry(text_menu, 1, 9)
 
-    flag_menu = True
-    return flag_menu, option
+    return option
 
+inven = files.load_file()
 while not flag_menu:
-    inven=files.load_file()
-    flag_menu, option = main()
+    
+    option = main()
 
     if option == 1:
+        add = "y"
         while add == "y":
-            services.add_product(inven)
+            inven = services.add_product(inven)
+
+            add = validation.yes_no(input("\nAdd another product (y/n) -> "))
+
+            # if add == "y":
+            #     pass
+            # if add == "n":
+                # a
+            
 
     elif option == 2:
         services.show_inventory(inven)
@@ -42,7 +51,7 @@ while not flag_menu:
 
     elif option == 3:
         product = validation.str_entry()
-        print(services.find_product(product, inven))
+        print(services.find_product(product, inven))#poner que muestre bonito y solo info[0]
 
     elif option == 4:
         product = validation.str_entry()
@@ -53,48 +62,55 @@ while not flag_menu:
     elif option == 5:
         product = validation.str_entry()
         services.remove_product(product, inven)
-        pass
 
     elif option == 6:
         stats_flag = False
         t_units, t_cost, exp_product, large_stock = stats.stats(inven)
-        print(t_units)
-        print(t_cost), 
-        print(exp_product)
-        print(large_stock)
         
         while not stats_flag:
             stats_flag, option = stats.menu()
+            element = 0
 
             match option:
                 case 1:
-                    print(input("Total Units in Inventory : " + str(t_units) + "\nPress enter to continue..."))
+                    print("- - - Total Units in Inventory - - -\n")
+                    print(input("Total Quantity : " + str(t_units) + "\n\nPress enter to go back..."))
+
                 case 2:
-                    print('\n')
-                    print(f'{"    Product    ":^18} {" Price ":^8} {"Quantity":^12} {"Total Cost":^14}')
-                    print(f'{"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
+                    print("- - - - Inventory with Total Cost per Product - - - -\n")
+                    print(f'{" # ":^4} {"    Product    ":^18} {" Price ":^8} {"Quantity":^12} {"Total Cost":^14}')
+                    print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
                             
                     for item in inven:
-                        print(f"{item['name']:<18} | {item['price']:<8} | {item['quantity']:<12} | {t_cost[element]:<18}")
+                        print(f"{(element+1):^4} | {item['name'].capitalize():<18} | {item['price']:<8} | {item['quantity']:<12} | {t_cost[element]:<18}")
                         element += 1
                     
-                    print(f'{"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
+                    print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
+                    print(input("\nPress enter to go back... "))
 
-                    print(input("\nPress enter to go back "))
                 case 3:
-                    pass
+                    print("- - - Most Expensive Product - - -\n")
+                    print("Item: " + exp_product[0].capitalize() + " - Price: $" + str(exp_product[1]))
+                    print(input("\nPress enter to go back..."))
+                    
                 case 4:
-                    pass
+                    print("- - - Product with Largest Stock - - -\n")
+                    print("Item: " + large_stock[0].capitalize() + " - Quantity: " + str(large_stock[1]))
+                    print(input("\nPress enter to go back..."))
+
                 case 5:
-                    pass
+                    stats_flag = True
+                    flag_menu = False
 
     elif option == 7:
         pass
 
     elif option == 8:
-        inventory = files.load_file()
+        inven=files.load_file()
     
     elif option == 9:
+        flag_menu = True
+        print("\n Thanks for using the Inventory System")
         services.exit()
 
     else:

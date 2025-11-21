@@ -32,3 +32,15 @@ def str_entry():
             continue
         break
     return item_name
+
+def yes_no(decision):
+    flag = False
+    while not flag:
+        if not decision:
+            print("Choose an option \n")
+            continue
+        if not all(c.isalpha() for c in decision):
+            print("Invalid option. Try Again\n")
+            continue
+        break
+    return decision.lower()

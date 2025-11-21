@@ -9,7 +9,8 @@ def clear():
         os.system("clear")
 
 def add_product(inventory):
-    print("\n\nEnter Product Information\n")
+    print("- - - Adding product - - -\n")
+    print("\nEnter Product Information\n")
     name = validation.str_entry()
     price = validation.float_entry("Price: ",0.001)
     quant = validation.int_entry("Quantity: ",1)
@@ -17,22 +18,24 @@ def add_product(inventory):
               'price': price, 
               'quantity': quant}
     inventory.append(product)
-    return
+    return inventory
 
 def show_inventory(inventory):
+    cont = 1
     print('\n')
-    print(f'{"    Product    ":^18} {" Price ":^8} {"Quantity":^8}')
-    print(f'{"---------------":<18} {"-------":^8} {"--------":^8}')
+    print(f'{" # ":^4} {"    Product    ":^18} {" Price ":^8} {"Quantity":^12}')
+    print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12}')
             
     for item in inventory:
-        print(f"{item['name']:<18} | {item['price']:<8} | {item['quantity']:<8}")
-    
-    print(f'{"---------------":<18} {"-------":^8} {"--------":^}')
+        print(f"{cont:^4} | {item['name'].capitalize():<18} | {item['price']:<10} | {item['quantity']:<14}")
+        cont += 1
+    print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12}')
 
     print(input("\nPress enter to go back "))
     return  
 
 def find_product(product, inventory):
+    print("- - - Finding product - - -\n")
     product = product.lower()
     for item in inventory:
         if product in item['name'].lower():
@@ -41,17 +44,33 @@ def find_product(product, inventory):
     return None
 
 def update_product(product, inventory, new_price = None, new_quant = None):
-    item = find_product(product, inventory)
+    print("- - - Updating product - - -\n")
+    item, element = find_product(product, inventory)
+    print(item)
     if new_price is not None:
         item['price'] = new_price
     if new_quant is not None:
         item['quantity'] = new_quant
+    print("Product updated succesfully")
     return inventory    
 
 def remove_product(product, inventory):
+    print("- - - Removing product - - -\n")
+    show_inventory(inventory)
     item, position = find_product(product, inventory)
     inventory.pop(position)
+    print(inventory)
     return inventory    
+
+def save_inv(fusion,inventory,inventory_csv):
+    final_inventory = []
+    if fusion:
+        for item in inventory_csv:
+            for product in inventory:
+                if product in item['name'].lower():
+                    pass#IM HERE
+                
+    pass
 
 def exit():
     pass
