@@ -31,7 +31,6 @@ def show_inventory(inventory):
         cont += 1
     print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12}')
 
-    print(input("\nPress enter to go back "))
     return  
 
 def find_product(product, inventory):
@@ -57,7 +56,6 @@ def remove_product(product, inventory):
     show_inventory(inventory)
     item, position = find_product(product, inventory)
     inventory.pop(position)
-    print(inventory)
     return inventory    
 
 def fusion(inventory,inventory_csv):

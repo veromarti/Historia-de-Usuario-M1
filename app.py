@@ -40,70 +40,119 @@ while not flag_menu:
             add = validation.yes_no(input("\nAdd another product (y/n) -> "))
             
     elif option == 2:
-        services.show_inventory(new_inventory)
-        services.clear()
+        if len(new_inventory) != 0:
+            services.show_inventory(new_inventory)
+            print(input("\nPress enter to go back "))
+            services.clear()
+        else:
+            print("No inventory found")
+            print(input("\nPress enter to go back "))
+            services.clear()
 
     elif option == 3:
-        product = validation.str_entry()
-        print("- - - Finding product - - -\n")
-        print(services.find_product(product, new_inventory))#poner que muestre bonito y solo info[0]
+        services.clear()
+        if len(new_inventory) != 0:
+            print("- - - Finding product - - -\n")
+            product = validation.str_entry()
+            found_product,x = services.find_product(product, new_inventory)
+            if found_product is not None:
+                print("- - - - - - Search result - - - - - -\n") 
+                print(f"Product: {found_product['name'].capitalize()} | Price: ${found_product['price']:.2f} | Quantity: {found_product['quantity']}")
+                
+            else:
+                print("\nNo product found\n")
+        else:
+            print("No inventory found")
+
+        print(input("\nPress enter to go back "))
+        services.clear()    
 
     elif option == 4:
-        services.show_inventory(new_inventory)
-        product = validation.str_entry()
-        n_price = validation.float_entry("New Price: ", 0.001)
-        n_quant = validation.int_entry("New Quantity: ", 1)
-        services.update_product(product, new_inventory, n_price, n_quant)
+        services.clear()
+        if len(new_inventory) != 0:
+            services.show_inventory(new_inventory)
+            product = validation.str_entry()
+            n_price = validation.float_entry("New Price: ", 0.001)
+            n_quant = validation.int_entry("New Quantity: ", 1)
+            services.update_product(product, new_inventory, n_price, n_quant)
+        else:
+            print("No inventory found")
+            print(input("\nPress enter to go back "))
+            services.clear()
 
     elif option == 5:
-        product = validation.str_entry()
-        services.remove_product(product, new_inventory)
+        services.clear()
+        if len(new_inventory) != 0:
+            product = validation.str_entry()
+            services.remove_product(product, new_inventory)
+        else:
+            print("No inventory found")
+            print(input("\nPress enter to go back "))
+            services.clear()
 
     elif option == 6:
-        stats_flag = False
-        t_units, t_cost, exp_product, large_stock = stats.stats(new_inventory)
-        
-        while not stats_flag:
-            stats_flag, option = stats.menu()
-            element = 0
+        services.clear()
+        if len(new_inventory) != 0:
+            stats_flag = False
+            t_units, t_cost, exp_product, large_stock = stats.stats(new_inventory)
+            
+            while not stats_flag:
+                stats_flag, option = stats.menu()
+                element = 0
 
-            match option:
-                case 1:
-                    print("- - - Total Units in Inventory - - -\n")
-                    print(input("Total Quantity : " + str(t_units) + "\n\nPress enter to go back..."))
+                match option:
+                    case 1:
+                        print("- - - Total Units in Inventory - - -\n")
+                        print(input("Total Quantity : " + str(t_units) + "\n\nPress enter to go back..."))
 
-                case 2:
-                    print("- - - - Inventory with Total Cost per Product - - - -\n")
-                    print(f'{" # ":^4} {"    Product    ":^18} {" Price ":^8} {"Quantity":^12} {"Total Cost":^14}')
-                    print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
-                            
-                    for item in new_inventory:
-                        print(f"{(element+1):^4} | {item['name'].capitalize():<18} | {item['price']:<8} | {item['quantity']:<12} | {t_cost[element]:<18}")
-                        element += 1
-                    
-                    print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
-                    print(input("\nPress enter to go back... "))
+                    case 2:
+                        print("- - - - Inventory with Total Cost per Product - - - -\n")
+                        print(f'{" # ":^4} {"    Product    ":^18} {" Price ":^8} {"Quantity":^12} {"Total Cost":^14}')
+                        print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
+                                
+                        for item in new_inventory:
+                            print(f"{(element+1):^4} | {item['name'].capitalize():<18} | {item['price']:<8} | {item['quantity']:<12} | {t_cost[element]:<18}")
+                            element += 1
+                        
+                        print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
+                        print(input("\nPress enter to go back... "))
 
-                case 3:
-                    print("- - - Most Expensive Product - - -\n")
-                    print("Item: " + exp_product[0].capitalize() + " - Price: $" + str(exp_product[1]))
-                    print(input("\nPress enter to go back..."))
-                    
-                case 4:
-                    print("- - - Product with Largest Stock - - -\n")
-                    print("Item: " + large_stock[0].capitalize() + " - Quantity: " + str(large_stock[1]))
-                    print(input("\nPress enter to go back..."))
+                    case 3:
+                        print("- - - Most Expensive Product - - -\n")
+                        print("Item: " + exp_product[0].capitalize() + " - Price: $" + str(exp_product[1]))
+                        print(input("\nPress enter to go back..."))
+                        
+                    case 4:
+                        print("- - - Product with Largest Stock - - -\n")
+                        print("Item: " + large_stock[0].capitalize() + " - Quantity: " + str(large_stock[1]))
+                        print(input("\nPress enter to go back..."))
 
-                case 5:
-                    stats_flag = True
-                    flag_menu = False
+                    case 5:
+                        stats_flag = True
+                        flag_menu = False
+        else:
+            services.clear()
+            print("No inventory found")
+            print(input("\nPress enter to go back "))
 
     elif option == 7:
+        services.clear()
         if len(new_inventory) != 0:
             print("You will loose the current inventory")
             services.show_inventory(new_inventory)
+            loose = validation.yes_no(input("\nLoad inventory -> "))
 
-        else: new_inventory=files.load_file()
+            if loose == "y":
+                csv_file = input('Enter the file name (inventory.csv): ').strip()
+                new_inventory = files.load_file(csv_file)
+                print(input("\nPress enter to continue..."))
+                services.clear()
+            else:continue
+
+        else:
+            new_inventory=files.load_file(csv_file='inventory.csv')
+            print(input("\nPress enter to continue..."))
+            services.clear()
 
     elif option == 8:
         if len(new_inventory) != 0:
@@ -119,14 +168,17 @@ while not flag_menu:
             option = validation.int_entry(text, 1, 2)
 
             if option == 1:
-                files.save_file(new_inventory)
+                files.save_file(new_inventory,csv_file='inventory.csv')
 
             elif option == 2:
-                old_inventory = files.load_file()
+                old_inventory = files.load_file(csv_file='inventory.csv')
                 inventory = services.fusion(new_inventory,old_inventory)
-                files.save_file(inventory)
+                files.save_file(inventory,csv_file='new_inventory.csv')
+        else:
+            print("No inventory found")
+            print(input("\nPress enter to go back "))
+            services.clear()
 
-    
     elif option == 9:
         flag_menu = True
         print("\n Thanks for using the Inventory System")

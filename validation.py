@@ -39,9 +39,9 @@ def yes_no(decision):
         if not decision:
             print("Choose an option \n")
             continue
-        if not all(c.isalpha() for c in decision):
+        if not all(decision=="y" or decision=="n" or c.isdigit() for c in decision):
             print("Invalid option. Try Again\n")
-            continue
+            break
         break
     return decision.lower()
 
@@ -64,11 +64,6 @@ def file_ok(csv_file):
                 is_file_ok = False
                 return is_file_ok, inventory, invalid_rows, products
             
-            # if columns != 3:
-            #     print("Header is invalid. The header must contain exactly 3 columns")
-            #     is_file_ok = False
-            #     invalid_rows += 1
-            #     return is_file_ok, inventory
 
             for num, row in enumerate(reader, start=2):
                 if len(row) != 3:
@@ -102,7 +97,4 @@ def file_ok(csv_file):
             print("CSV file cannot not be empy")
             is_file_ok = False
 
-    return is_file_ok, inventory, invalid_rows, products
-
-        
-        
+    return is_file_ok, inventory, invalid_rows, products     

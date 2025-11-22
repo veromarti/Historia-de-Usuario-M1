@@ -1,10 +1,9 @@
 import csv
 import validation
 
-def load_file():
+def load_file(csv_file):
     inventory_list = []
     products = 0
-    csv_file = input('Enter the file name (inventory.csv): ').strip()
 
     try:
         file_ok, inventory_list, rows, products = validation.file_ok(csv_file)
@@ -26,9 +25,7 @@ def load_file():
     
     return inventory_list
 
-def save_file(inventory):
-
-    csv_file = input('Enter the file name (inventory.csv): ').strip()
+def save_file(inventory,csv_file):
 
     try:
         with open(csv_file, "w", newline='', encoding='utf-8') as file:
