@@ -104,6 +104,7 @@ while not flag_menu:
                     case 1:
                         print("- - - Total Units in Inventory - - -\n")
                         print(input("Total Quantity : " + str(t_units) + "\n\nPress enter to go back..."))
+                        services.clear()
 
                     case 2:
                         print("- - - - Inventory with Total Cost per Product - - - -\n")
@@ -116,16 +117,19 @@ while not flag_menu:
                         
                         print(f'{"---":<4} {"---------------":<18} {"-------":^8} {"--------":^12} {"----------":^14}')
                         print(input("\nPress enter to go back... "))
+                        services.clear()
 
                     case 3:
                         print("- - - Most Expensive Product - - -\n")
                         print("Item: " + exp_product[0].capitalize() + " - Price: $" + str(exp_product[1]))
                         print(input("\nPress enter to go back..."))
+                        services.clear()
                         
                     case 4:
                         print("- - - Product with Largest Stock - - -\n")
                         print("Item: " + large_stock[0].capitalize() + " - Quantity: " + str(large_stock[1]))
                         print(input("\nPress enter to go back..."))
+                        services.clear()
 
                     case 5:
                         stats_flag = True
