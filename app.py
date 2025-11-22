@@ -18,8 +18,8 @@ def main():
         "4. Update Product\n"
         "5. Remove Product\n"
         "6. Stats\n"
-        "7. Save CSV file\n"
-        "8. Load CSV file\n"
+        "7. Load CSV file\n"
+        "8. Save CSV file\n"
         "9. Exit\n"
         "\nChoose an option (1-9): "
     )
@@ -51,6 +51,7 @@ while not flag_menu:
 
     elif option == 3:
         product = validation.str_entry()
+        print("- - - Finding product - - -\n")
         print(services.find_product(product, inven))#poner que muestre bonito y solo info[0]
 
     elif option == 4:
@@ -103,10 +104,20 @@ while not flag_menu:
                     flag_menu = False
 
     elif option == 7:
-        pass
+        files.load_file()
 
     elif option == 8:
-        inven=files.load_file()
+        inven = files.load_file()
+        inv = [{'name': 'Milk 1l', 
+              'price': 1.1, 
+              'quantity': 32},
+              {'name': 'Juice', 
+              'price': 2.1, 
+              'quantity': 2},
+              {'name': 'Bread', 
+              'price': 2.6, 
+              'quantity': 29}]
+        services.fusion(inv,inven)
     
     elif option == 9:
         flag_menu = True
@@ -116,5 +127,5 @@ while not flag_menu:
     else:
         flag_menu = False
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

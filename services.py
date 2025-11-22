@@ -35,13 +35,12 @@ def show_inventory(inventory):
     return  
 
 def find_product(product, inventory):
-    print("- - - Finding product - - -\n")
     product = product.lower()
     for item in inventory:
         if product in item['name'].lower():
             element = inventory.index(item)
             return item, element
-    return None
+    return None, None
 
 def update_product(product, inventory, new_price = None, new_quant = None):
     print("- - - Updating product - - -\n")
@@ -62,15 +61,18 @@ def remove_product(product, inventory):
     print(inventory)
     return inventory    
 
-def save_inv(fusion,inventory,inventory_csv):
-    final_inventory = []
-    if fusion:
-        for item in inventory_csv:
-            for product in inventory:
-                if product in item['name'].lower():
-                    pass#IM HERE
-                
-    pass
+def fusion(inventory,inventory_csv):
+    final_inventory = inventory_csv
+    for item in inventory:
+        found_product, x = find_product(item['name'],inventory_csv)
+        if found_product:
+            found_product['price'] = item['price']
+            found_product['quantity'] = item['quantity']
+        else:
+            final_inventory.append(item)
+    return final_inventory
+        
+        
 
 def exit():
     pass
