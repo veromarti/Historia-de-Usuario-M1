@@ -62,7 +62,7 @@ def file_ok(csv_file):
             if current_header != header:
                 print("Wrong CSV header")
                 is_file_ok = False
-                return is_file_ok, inventory, products
+                return is_file_ok, inventory, invalid_rows, products
             
             # if columns != 3:
             #     print("Header is invalid. The header must contain exactly 3 columns")

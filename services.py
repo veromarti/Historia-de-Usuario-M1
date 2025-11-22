@@ -45,7 +45,6 @@ def find_product(product, inventory):
 def update_product(product, inventory, new_price = None, new_quant = None):
     print("- - - Updating product - - -\n")
     item, element = find_product(product, inventory)
-    print(item)
     if new_price is not None:
         item['price'] = new_price
     if new_quant is not None:
@@ -72,7 +71,5 @@ def fusion(inventory,inventory_csv):
             final_inventory.append(item)
     return final_inventory
         
-        
-
 def exit():
     pass
