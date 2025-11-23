@@ -1,4 +1,9 @@
 def int_entry(message, min=None, max=None):
+    """This function validates that entry typed by the user 
+        is an int value, if the value is inside range (min-max)
+        and it is an int number the function returns the value
+    """
+
     flag = False
     while not flag:
         try:
@@ -7,9 +12,14 @@ def int_entry(message, min=None, max=None):
                 raise ValueError
             return value
         except ValueError:
-            print("Wrong Entry. Try again: ")
+            print("\nWrong Entry. Try again\n")
 
 def float_entry(message,min=None):
+    """This function validates that entry typed by the user 
+        is a float value, if the value is bigger than min value
+        and it is a float number the function returns the value
+    """
+
     flag = False
     while not flag:
         try:
@@ -18,9 +28,14 @@ def float_entry(message,min=None):
                 raise ValueError
             return value
         except ValueError:
-            print("Wrong Entry. Try again: ")
+            print("\nWrong Entry. Try again\n")
 
 def str_entry():
+    """This function validates that entry typed by the user 
+        is a string, if the entry is composed by alphanumeric
+        characters and/or spaces it returns the string
+    """
+
     flag = False
     while not flag:
         item_name = input("Name: ").strip()
@@ -34,18 +49,32 @@ def str_entry():
     return item_name
 
 def yes_no(decision):
+    """This function validates that entry typed by the user 
+        is a 'y' or a 'n', if yes the function returns the 
+        decision variable
+    """
+
     flag = False
     while not flag:
         if not decision:
-            print("Choose an option \n")
-            continue
-        if not all(decision=="y" or decision=="n" or c.isdigit() for c in decision):
-            print("Invalid option. Try Again\n")
-            break
+            print("\nChoose an option \n")
+            return
+        if not all(decision.lower()=="y" or decision.lower()=="n" or c.isdigit() for c in decision):
+            print("\nInvalid option. Try Again\n")
+            return
         break
     return decision.lower()
 
 def file_ok(csv_file):
+    """This function validates that the .csv file has the correct
+        header, that every row has exactly 3 columns, and that
+        values in the price and quantity columns are bigger than 0.
+        In case of any of the above it will show an error to the user,
+        and it will ommit invalid rows. The function returns a boolean,
+        the .csv file content save in a list of dictionaries, the number
+        of invalid rows, and the amount of correct rows found (products loaded)
+    """
+
     import csv
     header = ['name','price','quantity']
     invalid_rows = 0

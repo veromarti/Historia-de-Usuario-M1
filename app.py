@@ -1,3 +1,9 @@
+"""This file is the main .py file that must be run so the user can interact 
+    with the program correclty, it uses functions from the modules: services,
+    validation, files and stats. It consists in a while loop that iterates
+    until the user decides to leave the program.
+"""
+
 import services
 import validation
 import files
@@ -29,23 +35,25 @@ def main():
     return option
 
 while not flag_menu:
-    
+    services.clear()
     option = main()
 
     if option == 1:
+        services.clear()
         add = "y"
         while add == "y":
             new_inventory = services.add_product(new_inventory)
-
             add = validation.yes_no(input("\nAdd another product (y/n) -> "))
             
     elif option == 2:
+        services.clear()
         if len(new_inventory) != 0:
+            print("- - - - - - - - INVENTORY - - - - - - - -\n")
             services.show_inventory(new_inventory)
             print(input("\nPress enter to go back "))
             services.clear()
         else:
-            print("No inventory found")
+            print("\nNo inventory found")
             print(input("\nPress enter to go back "))
             services.clear()
 
@@ -72,6 +80,7 @@ while not flag_menu:
         if len(new_inventory) != 0:
             print("- - - - - - - Updating product - - - - - - -")
             services.show_inventory(new_inventory)
+            print("\n")
             product = validation.str_entry()
             n_price = validation.float_entry("New Price: ", 0.001)
             n_quant = validation.int_entry("New Quantity: ", 1)
@@ -98,6 +107,7 @@ while not flag_menu:
             t_units, t_cost, exp_product, large_stock = stats.stats(new_inventory)
             
             while not stats_flag:
+                services.clear()
                 stats_flag, option = stats.menu()
                 element = 0
 
@@ -135,6 +145,7 @@ while not flag_menu:
                     case 5:
                         stats_flag = True
                         flag_menu = False
+                        services.clear()
         else:
             services.clear()
             print("No inventory found")
@@ -145,10 +156,11 @@ while not flag_menu:
         if len(new_inventory) != 0:
             print("You will loose the current inventory")
             services.show_inventory(new_inventory)
-            loose = validation.yes_no(input("\nLoad inventory -> "))
+            loose = validation.yes_no(input("\nLoad inventory (y/n) -> "))
 
             if loose == "y":
                 csv_file = input('Enter the file name (inventory.csv): ').strip()
+                services.clear()
                 new_inventory = files.load_file(csv_file)
                 print(input("\nPress enter to continue..."))
                 services.clear()
@@ -160,6 +172,7 @@ while not flag_menu:
             services.clear()
 
     elif option == 8:
+        services.clear()
         if len(new_inventory) != 0:
             
             text= (
@@ -180,7 +193,7 @@ while not flag_menu:
                 inventory = services.fusion(new_inventory,old_inventory)
                 files.save_file(inventory,csv_file='new_inventory.csv')
         else:
-            print("No inventory found")
+            print("\nNo inventory found")
             print(input("\nPress enter to go back "))
             services.clear()
 
