@@ -42,20 +42,25 @@ def find_product(product, inventory):
     return None, None
 
 def update_product(product, inventory, new_price = None, new_quant = None):
-    print("- - - Updating product - - -\n")
     item, element = find_product(product, inventory)
-    if new_price is not None:
-        item['price'] = new_price
-    if new_quant is not None:
-        item['quantity'] = new_quant
-    print("Product updated succesfully")
+    if item is not None:
+        if new_price is not None:
+            item['price'] = new_price
+        if new_quant is not None:
+            item['quantity'] = new_quant
+        print("Product updated succesfully")
+    else:print("No product found\n")
     return inventory    
 
 def remove_product(product, inventory):
-    print("- - - Removing product - - -\n")
+    print("- - - Removing product - - -")
     show_inventory(inventory)
     item, position = find_product(product, inventory)
-    inventory.pop(position)
+    if position is not None:
+        inventory.pop(position)
+        print("Product removed successfully")
+        show_inventory(inventory)
+    else:print("No product found\n")
     return inventory    
 
 def fusion(inventory,inventory_csv):

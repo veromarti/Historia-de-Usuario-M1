@@ -70,6 +70,7 @@ while not flag_menu:
     elif option == 4:
         services.clear()
         if len(new_inventory) != 0:
+            print("- - - - - - - Updating product - - - - - - -")
             services.show_inventory(new_inventory)
             product = validation.str_entry()
             n_price = validation.float_entry("New Price: ", 0.001)
